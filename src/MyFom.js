@@ -5,16 +5,23 @@ export default function MyForm() {
     const [tasks, setTasks] = useState([]);
     const [selectedTasks, setSelectedTasks] = useState([]);
     const [nextId, setNextId] = useState(0); 
+    
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleAddTask(); 
+        }
+    };
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
 
     const handleAddTask = () => {
-        if (inputValue.trim() === "") return; // Prevent adding empty tasks
+        if (inputValue.trim() === "") return; 
         setTasks([...tasks, { id: nextId, task: inputValue }]);
         setNextId(nextId + 1);
-        setInputValue(""); // Clear input after adding
+        setInputValue(""); 
     };
 
     const handleTaskSelect = (event, selectedTask) => {
@@ -40,6 +47,7 @@ export default function MyForm() {
                     placeholder="Enter The Task Here"
                     required
                     value={inputValue}
+                    onKeyDown={handleKeyPress}
                     onChange={handleInputChange}
                 />
                 <button className="add" onClick={handleAddTask}>Add</button>
